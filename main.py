@@ -16,6 +16,7 @@ def search_youtube(query):
     url = "https://www.youtube.com/results"
     params = {"search_query": query}
     response = requests.get(url, params=params)
+    print(response.text) # print response text for debugging
     search_results = re.findall(r'/watch\?v=(.{11})" title="(.*?)"', response.text)
     results = []
     for search_result in search_results[:5]:
@@ -23,6 +24,7 @@ def search_youtube(query):
         title = search_result[1]
         results.append({"title": title, "video_id": video_id})
     return results
+
 
 # define a command handler for the /start command
 @app.on_message(filters.command("start"))
