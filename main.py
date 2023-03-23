@@ -50,8 +50,9 @@ keyboard = InlineKeyboardMarkup([buttons])
 
     
     # send a message with the search results as buttons
-    message_text = f"Here are 5 results for '{query}':"
-    client.send_message(chat_id=message.chat.id, text=message_text, reply_markup=keyboard)
+message_text = f"Here are 5 results for '{query}':"
+client.send_message(chat_id=message.chat.id, text=message_text, reply_markup=keyboard)
+
 
 # define a callback query handler for the search result buttons
 @app.on_callback_query()
