@@ -46,7 +46,8 @@ def song_command(client, message):
         button_callback_data = f"video_{result['video_id']}" # add a prefix to ensure uniqueness
         button = InlineKeyboardButton(button_label, callback_data=button_callback_data)
         buttons.append(button)
-    keyboard = InlineKeyboardMarkup([buttons])
+    keyboard = InlineKeyboardMarkup([buttons], resize_keyboard=True, one_time_keyboard=True)
+
 
     # send a message with the search results as buttons
     message_text = f"Here are 5 results for '{query}':"
