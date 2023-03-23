@@ -35,23 +35,22 @@ def start_command(client, message):
 def song_command(client, message):
     # get the query from the message
     query = message.text.replace("/song", "").strip()
-    
+
     # search for the query on YouTube
     results = search_youtube(query)
-    
-    # create a list of InlineKeyboardButton objects for the search results
-buttons = []
-for i, result in enumerate(results):
-    button_label = f"{i+1}. {result['title']}"
-    button_callback_data = f"video_{result['video_id']}" # add a prefix to ensure uniqueness
-    button = InlineKeyboardButton(button_label, callback_data=button_callback_data)
-    buttons.append(button)
-keyboard = InlineKeyboardMarkup([buttons])
 
-    
+    # create a list of InlineKeyboardButton objects for the search results
+    buttons = []
+    for i, result in enumerate(results):
+        button_label = f"{i+1}. {result['title']}"
+        button_callback_data = f"video_{result['video_id']}" # add a prefix to ensure uniqueness
+        button = InlineKeyboardButton(button_label, callback_data=button_callback_data)
+        buttons.append(button)
+    keyboard = InlineKeyboardMarkup([buttons])
+
     # send a message with the search results as buttons
-message_text = f"Here are 5 results for '{query}':"
-client.send_message(chat_id=message.chat.id, text=message_text, reply_markup=keyboard)
+    message_text = f"Here are 5 results for '{query}':"
+    client.send_message(chat_id=message.chat.id, text=message_text, reply_markup=keyboard)
 
 
 # define a callback query handler for the search result buttons
