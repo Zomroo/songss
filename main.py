@@ -40,12 +40,14 @@ def song_command(client, message):
     results = search_youtube(query)
     
     # create a list of InlineKeyboardButton objects for the search results
-    buttons = []
-    for i, result in enumerate(results):
-        button_label = f"{i+1}. {result['title']}"
-        button = InlineKeyboardButton(button_label, callback_data=result["video_id"])
-        buttons.append(button)
-    keyboard = InlineKeyboardMarkup([buttons])
+buttons = []
+for i, result in enumerate(results):
+    button_label = f"{i+1}. {result['title']}"
+    button_callback_data = f"video_{result['video_id']}" # add a prefix to ensure uniqueness
+    button = InlineKeyboardButton(button_label, callback_data=button_callback_data)
+    buttons.append(button)
+keyboard = InlineKeyboardMarkup([buttons])
+
     
     # send a message with the search results as buttons
     message_text = f"Here are 5 results for '{query}':"
