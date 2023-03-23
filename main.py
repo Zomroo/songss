@@ -7,8 +7,8 @@ import re
 
 
 # create a new Pyrogram client instance	# create a new Pyrogram client instance
-api_id = 16844842	api_id = os.environ.get("API_ID")
-api_hash = "f6b0ceec5535804be7a56ac71d08a5d4"	api_hash = os.environ.get("API_HASH")
+api_id = 16844842	
+api_hash = "f6b0ceec5535804be7a56ac71d08a5d4"	
 bot_token = "6145559264:AAFufTIozcyIRZPf9bRWCvky2_NhbbjWTKU"
 app = Client("my_bot", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
 # define a function to search for songs on YouTube
