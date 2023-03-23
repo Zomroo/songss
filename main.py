@@ -39,23 +39,24 @@ def song_command(client, message):
     # search for the query on YouTube
     results = search_youtube(query)
 
-    # check if there are any results
-    if not results:
-        client.send_message(chat_id=message.chat.id, text=f"Sorry, no results found for '{query}'.")
-        return
+    if len(results) == 0:
+        # send a message if there are no search results found
+        message_text = f"Sorry, no results found for '{query}'."
+        client.send_message(chat_id=message.chat.id, text=message_text)
+    else:
+        # create a list of InlineKeyboardButton objects for the search results
+        buttons = []
+        for i, result in enumerate(results):
+            button_label = f"{i+1}. {result['title']}"
+            button_callback_data = f"video_{result['video_id']}" # add a prefix to ensure uniqueness
+            button = InlineKeyboardButton(button_label, callback_data=button_callback_data)
+            buttons.append(button)
+        keyboard = InlineKeyboardMarkup([buttons], resize_keyboard=True, one_time_keyboard=True)
 
-    # create a list of InlineKeyboardButton objects for the search results
-    buttons = []
-    for i, result in enumerate(results):
-        button_label = f"{i+1}. {result['title']}"
-        button_callback_data = f"video_{result['video_id']}" # add a prefix to ensure uniqueness
-        button = InlineKeyboardButton(button_label, callback_data=button_callback_data)
-        buttons.append(button)
-    keyboard = InlineKeyboardMarkup([buttons], resize_keyboard=True, one_time_keyboard=True)
 
-    # send a message with the search results as buttons
-    message_text = f"Here are 5 results for '{query}':"
-    client.send_message(chat_id=message.chat.id, text=message_text, reply_markup=keyboard)
+        # send a message with the search results as buttons
+        message_text = f"Here are 5 results for '{query}':"
+        client.send_message(chat_id=message.chat.id, text=message_text, reply_markup=keyboard)
 
 
 # define a callback query handler for the search result buttons
